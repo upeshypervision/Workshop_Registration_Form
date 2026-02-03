@@ -1,7 +1,10 @@
 from pymongo import MongoClient
 
-MONGO_URI = "mongodb+srv://blackfalconx69_db_user:t2k6FxnaHMkFYXM9@cluster0.ms0ky1p.mongodb.net/?appName=Cluster0/"
+MONGO_URI = "mongodb://localhost:27017"
+DB_NAME = "workshop_attendance"
+
 client = MongoClient(MONGO_URI)
-db = client["codehustle_hackathon"]  # Database name
+db = client[DB_NAME]
+
 def get_db():
     return db

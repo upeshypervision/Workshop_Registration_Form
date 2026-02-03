@@ -1,13 +1,7 @@
-import React from 'react';
-import Register from './pages/reg.jsx';
-
-
-function App() {
+export default function App() {
   return (
-    <div>
-      <Register />
-    </div>
+    <h1 style={{ color: "green" }}>
+      APP IS RENDERING 🎉
+    </h1>
   );
 }
-
-export default App;

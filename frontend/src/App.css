@@ -1,0 +1,35 @@
+.scan-container {
+  max-width: 420px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  background: white;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #2596be;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e7fa4;
+}
+
+.status {
+  margin-top: 15px;
+  font-weight: bold;
+}

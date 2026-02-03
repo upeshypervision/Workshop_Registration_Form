@@ -1,53 +1,30 @@
-from flask import request, jsonify
-from database import get_db
+from flask import Blueprint, request, jsonify
 from datetime import datetime
+from database import get_attendees_collection
 
+scan_qr = Blueprint("scanq", __name__)
+
+@scan_qr.route("/scan", methods=["POST"])
 def scan_qr():
-    data = request.get_json()
+    data = request.json
+    sap_id = data.get("sapId")
 
-    if not data:
-        return jsonify({
-            "success": False,
-            "message": "Invalid QR data"
-        }), 400
+    if not sap_id:
+        return jsonify({"error": "SAP ID missing"}), 400
 
-    sapId = data.get("sapId")
-    hypId = data.get("HypId")
+    attendees = get_attendees_collection()
 
-    db = get_db()
-    attendance = db["attendance"]
-    registration = db["workshop_registration"]
-
-    if attendance.find_one({"sapId": sapId}):   #scan check
-        return jsonify({
-            "success": False,
-            "message": "QR already scanned"
-        }), 409
-
-
-    user = registration.find_one({          #registration check 
-        "sap": str(sapId),
-        "hypId": hypId
-    })
-
-    if not user:
-        return jsonify({
-            "success": False,
-            "message": "Invalid QR"
-        }), 400
-
-    attendance.insert_one({                  #attendance mark
-        "sapId": sapId,
-        "hypId": hypId,
-        "scannedAt": datetime.utcnow()
-    })
-
-    registration.update_one(
-        {"sap": str(sapId)},
-        {"$set": {"attended": True}}
+    result = attendees.find_one_and_update(
+        {"sapId": sap_id},
+        {
+            "$set": {
+                "status": "scanned",
+                "scannedAt": datetime.utcnow()
+            }
+        }
     )
 
-    return jsonify({
-        "success": True,
-        "message": "Attendance marked successfully"
-    }), 200
+    if not result:
+        return jsonify({"message": "SAP ID not found"}), 404
+
+    return jsonify({"message": "Attendance marked successfully"})
