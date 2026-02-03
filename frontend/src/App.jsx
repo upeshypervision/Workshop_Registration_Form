@@ -1,21 +1,16 @@
-import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import ScanQR from "./pages/ScanQR";
 
-export default function App() {
+function App() {
   return (
-    <>
-      <Link to="/scan">
-        <button>Go to Scan Page</button>
-      </Link>
-
+    <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<h1 style={{ color: "green" }}>HOME PAGE ✅</h1>}
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/scan" element={<ScanQR />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }
+
+export default App;
