@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import "./ScanQR.css";
 
-/**
- * Converts Python-style dict QR to JSON
- * {'name': 'Ritisha', 'sapId': 590022871}
- */
 function parsePythonDict(text) {
   try {
     return JSON.parse(
@@ -43,7 +39,7 @@ export default function ScanQR() {
         const data = parsePythonDict(decodedText);
 
         if (!data || !data.sapId) {
-          setMessage("❌ Invalid QR Code");
+          setMessage(" Invalid QR Code");
           return;
         }
 
@@ -57,7 +53,7 @@ export default function ScanQR() {
           const result = await res.json();
           setMessage(result.message);
         } catch {
-          setMessage("❌ Backend not reachable");
+          setMessage(" Backend not reachable");
         }
       },
       () => {} // ignore scan noise
